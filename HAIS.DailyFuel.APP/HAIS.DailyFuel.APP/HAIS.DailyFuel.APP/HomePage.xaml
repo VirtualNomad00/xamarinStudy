@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:HAIS.DailyFuel.APP"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:controls ="clr-namespace:HAIS.DailyFuel.APP.controls"
+             x:Class="HAIS.DailyFuel.APP.HomePage"
+             BackgroundColor="#C5CAE9">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0" />
+    </ContentPage.Padding>
+
+    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Orientation="Vertical" >
+
+        <local:Header/>
+
+        <Grid Padding="20,20,20,20" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"  />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center" TextColor="WhiteSmoke" FontFamily="AvenirNext-DemiBold" FontSize="20" VerticalTextAlignment="Start" HorizontalTextAlignment="Center" Text="{Binding CurrentDate}"/>
+            
+            <controls:CustomPicker Grid.Row="1" HorizontalOptions="Start" Grid.Column="0" x:Name="StatePicker" Style="{StaticResource PickerStyle}" ItemsSource="{Binding StateList, Mode=OneWay}" ItemDisplayBinding="{Binding Name}" SelectedItem ="{Binding SelectedState, Mode=TwoWay}" HeightRequest ="60" Image="ic_arrow_drop_down">
+                <Picker.Behaviors>
+                    <behaviors:EventHandlerBehavior EventName="SelectedIndexChanged">
+                        <behaviors:InvokeCommandAction Command="{Binding ChangeCitySource}" CommandParameter="{x:Reference StatePicker}" />
+                    </behaviors:EventHandlerBehavior>
+                </Picker.Behaviors>
+            </controls:CustomPicker>
+
+            <controls:CustomPicker Grid.Row="1" Grid.Column="3" HorizontalOptions="Start" x:Name="CityPicker" SelectedItem ="{Binding SelectedCity , Mode=TwoWay}" Style="{StaticResource PickerStyle}" Title="Select City" ItemsSource="{Binding CityList ,Mode=OneWay }" HeightRequest ="60" Image="ic_arrow_drop_down"
+              ItemDisplayBinding="{Binding Name}">
+                <Picker.Behaviors>
+                    <behaviors:EventHandlerBehavior EventName="SelectedIndexChanged">
+                        <behaviors:InvokeCommandAction Command="{Binding GetAvgFuelPrice}" CommandParameter="{x:Reference CityPicker}"/>
+                    </behaviors:EventHandlerBehavior>
+                </Picker.Behaviors>
+            </controls:CustomPicker>
+
+        </Grid>
+
+        <ListView  x:Name="PriceView" ItemsSource="{Binding CityFuelAvgPriceList}" RowHeight="150" SeparatorVisibility="None" SeparatorColor="Transparent">
+            <ListView.Header>
+                <Grid IsVisible ="False">
+                    <Grid.Triggers>
+                        <Trigger TargetType="Grid" Property="IsVisible" Value="False">
+                            <Setter Property="HeightRequest" Value="0"/>
+                        </Trigger>
+                    </Grid.Triggers>
+
+                </Grid>
+            </ListView.Header>
+            <ListView.ItemTemplate >
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <Grid Margin="30,0,0,0" ColumnSpacing="10" RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <Label FontAttributes="Bold" FontSize="23" FontFamily="AvenirNextCondensed-Medium" Grid.Row="0" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start" VerticalTextAlignment="End" Grid.Column="0"  TextColor="WhiteSmoke" Text="{Binding Type}"/>
+                                <Label FontAttributes="Bold" FontFamily="AvenirNext-DemiBold" FontSize="59"  HorizontalOptions="StartAndExpand" VerticalTextAlignment="Start" Grid.Row="1" Grid.Column="0" TextColor="WhiteSmoke" Text="{Binding Price}"/>
+                                <Label Margin="0,15,0,0" FontAttributes="Bold" FontFamily="AvenirNextCondensed-Medium" FontSize="15" VerticalTextAlignment="Start" HorizontalOptions="StartAndExpand" Grid.Row="1" Grid.Column="1" TextColor="WhiteSmoke" Text="rupees/Litre"/>
+                                <controls:CustomCornerLabel  CurvedBackgroundColor="WhiteSmoke" CurvedCornerRadius="15" FontAttributes="Bold" FontFamily="AvenirNextCondensed-Medium" FontSize="15" VerticalTextAlignment="Center" 
+                                        HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="1" TextColor="#666ad1" Text="{Binding Change}" Margin="0,40,0,15" />
+
+                            </Grid>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer >
+                <Label IsVisible="False">
+                    <Label.Triggers>
+                        <Trigger TargetType="Label" Property="IsVisible" Value="False">
+                            <Setter Property="HeightRequest" Value="0"/>
+                        </Trigger>
+                    </Label.Triggers>
+                </Label>
+            </ListView.Footer>
+        </ListView>
+        
+        <Button x:Name="navigateButton" Text="Check Petrol Pumps Nearby" Clicked="OnNavigateButtonClicked"  BackgroundColor="#3F51B5" TextColor="{StaticResource ButtonTextColor}" />
+
+
+        <local:Footer/>
+
+    </StackLayout>
+
+
+</ContentPage>
+
+

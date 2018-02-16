@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HAIS.DailyFuel.APP.Header">
+  <ContentView.Content >
+        <Grid BackgroundColor="#303F9F">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            
+            <Label  Text="Daily Fuel" TextColor="#ffffff" FontAttributes="Bold" FontSize="Large" Grid.Row="0" 
+                    HorizontalOptions="Center" HorizontalTextAlignment="Center" 
+                VerticalTextAlignment="Center"/>
+            
+            <Image  Source="icon.png" Grid.Row="0" HorizontalOptions="Start" >
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnNavigateButtonClicked"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+
+           
+
+           
+        </Grid>
+  </ContentView.Content>
+</ContentView>

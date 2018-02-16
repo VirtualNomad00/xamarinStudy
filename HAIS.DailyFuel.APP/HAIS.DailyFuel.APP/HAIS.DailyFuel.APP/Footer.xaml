@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HAIS.DailyFuel.APP.Footer">
+    <ContentView.Content>
+        <Grid BackgroundColor="#303F9F" Margin="0,50,0,0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Margin="20,5,0,5"  Grid.Row="0" HorizontalTextAlignment="Center"  TextColor="{StaticResource NormalTextColor}" 
+              VerticalTextAlignment="Center" Text="Disclamer : The price might not be 100% accurate"></Label>
+
+        </Grid>
+
+            
+    </ContentView.Content>
+</ContentView>
